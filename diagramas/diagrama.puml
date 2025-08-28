@@ -1,0 +1,20 @@
+@startuml Trabajo Practico Alquiler de Autos
+
+    abstract class Vehiculo{
+        - nombre
+        - Matricula: number
+        - estado
+        - categoria: CategoriaVehiculo
+        - 
+    }
+
+    abstract class CategoriaVehiculo{
+    }
+
+    class Compacto{}
+    class Sedan{}
+    class SUV{}
+
+
+
+@enduml
