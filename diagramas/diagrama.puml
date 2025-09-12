@@ -1,6 +1,17 @@
 @startuml Trabajo Practico Alquiler de Autos
 
-    abstract class Vehiculo{
+class Sistema {
+    - vehiculos: Vehiculo[]
+    - clientes: Cliente[]
+    - reservas: Reserva[]
+
+    + ingresarCliente()
+    + ingresarVehiculo()
+    + ingresarReserva()
+ 
+}
+
+class Vehiculo{
         - nombre
         - Matricula: number
         - estado
@@ -9,29 +20,29 @@
         - kilometraje
 
         + getters_y_Setters()
-    }
+}
 
-    abstract class CategoriaVehiculo extends Vehiculo{
-    }
+abstract class CategoriaVehiculo{
+    abstract calcularTarifa()
+}
+class Compacto extends CategoriaVehiculo{}
+class Sedan extends CategoriaVehiculo{}
+class SUV extends CategoriaVehiculo{}
 
-    class Compacto extends CategoriaVehiculo{}
-    class Sedan extends CategoriaVehiculo{}
-    class SUV extends CategoriaVehiculo{}
+class Cliente {
+    - nombre
+    - dni 
 
-    class Reserva{
-        - cliente
-        - fechaInicio
-        - fechaFin
-        + ReservaVehiculo()
-    }
+    + hacerReserva()
+}
 
-    class Tarifa{
-        - monto
-        + getters_y_Setters()
-        + obtenerValor()
-    }
-    class CalculadoraDeTarifas{
-            + calcularTarifa(vehiculo: Vehiculo)
-    }
+class Reserva{
+    - cliente
+    - vehiculo 
+    - fechaInicio
+    - fechaFin
+
+    + actualizarEstadoAuto()
+}
 
 @enduml
