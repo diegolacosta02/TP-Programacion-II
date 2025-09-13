@@ -4,6 +4,9 @@
         - vehiculo: Vehiculo[]
         - cliente: Cliente[]
         - reserva: Reserva[]
+
+        + ingresarCliente(c: cliente)
+        + ingresarVehiculo(v: Vehiculo)
         + crearReserva(v: Vehiculo, fechaInicio:Date, fechaFin: Date)
     }
 
@@ -31,9 +34,8 @@
     class SUV extends CategoriaVehiculo{}
 
     class Cliente{
-        - id: number
+        - dni: number
         - nombre: string
-        - email: string
         - telefono: string
     }
 
