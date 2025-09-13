@@ -1,28 +1,51 @@
 @startuml Trabajo Practico Alquiler de Autos
 
-    abstract class Vehiculo{
+    class DriveHub{
+        - vehiculo: Vehiculo[]
+        - cliente: Cliente[]
+        - reserva: Reserva[]
+        + crearReserva(v: Vehiculo, fechaInicio:Date, fechaFin: Date)
+    }
+
+    class Vehiculo{
         - nombre
         - Matricula: number
         - estado
         - categoria: CategoriaVehiculo
-        - disponibilidad
         - kilometraje
+        - historialMantenimientos: Mantenimiento[]
 
-        + getters_y_Setters()
+        + registrarMantenimiento(m: Mantenimiento)
+        + calcularTarifa(reserva: Reserva)
     }
 
     abstract class CategoriaVehiculo extends Vehiculo{
+        # tarifaBase: number
+        # cargoAdicional: number
     }
-
+    'Se utiliza la categoriaVehiculo para permitir la insercion de mas clases en el futuro
+    'Logrando que al utilizar el metodo de calculadora, no tener que reescribir la calculadora
+    'Para cada categoria que se añada, solo le importará la tarifa base y el cargo adicional'
     class Compacto extends CategoriaVehiculo{}
     class Sedan extends CategoriaVehiculo{}
     class SUV extends CategoriaVehiculo{}
 
+    class Cliente{
+        - id: number
+        - nombre: string
+        - email: string
+        - telefono: string
+    }
+
     class Reserva{
-        - cliente
-        - fechaInicio
-        - fechaFin
-        + ReservaVehiculo()
+        - idReserva:number
+        - cliente: Cliente
+        - fechaInicio: Date
+        - fechaFin: Date
+        - vehiculo: Vehiculo
+        - kmRecorridos: number
+        
+        + calcularDisponibilidad()
     }
 
     class Tarifa{
@@ -30,8 +53,15 @@
         + getters_y_Setters()
         + obtenerValor()
     }
-    class CalculadoraDeTarifas{
-            + calcularTarifa(vehiculo: Vehiculo)
+
+    class Mantenimiento{
+        - fecha: Date
+        - costo: number
+        - descripcion: string
+    }
+    
+    class CalculadoraDeTarifas{   
+        + calcularTarifa(vehiculo: Vehiculo, kmFin: number  )
     }
 
 @enduml
