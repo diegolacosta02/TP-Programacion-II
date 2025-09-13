@@ -7,7 +7,7 @@
 
         + ingresarCliente(c: cliente)
         + ingresarVehiculo(v: Vehiculo)
-        + crearReserva(v: Vehiculo, fechaInicio:Date, fechaFin: Date)
+        + crearReserva(c: Cliente, v: Vehiculo, fechaInicio:Date, fechaFin: Date)
     }
 
     class Vehiculo{
@@ -16,22 +16,17 @@
         - estado
         - categoria: CategoriaVehiculo
         - kilometraje
+        # tarifaBase: number
+        # cargoAdicional: number
         - historialMantenimientos: Mantenimiento[]
 
         + registrarMantenimiento(m: Mantenimiento)
         + calcularTarifa(reserva: Reserva)
     }
 
-    abstract class CategoriaVehiculo extends Vehiculo{
-        # tarifaBase: number
-        # cargoAdicional: number
-    }
-    'Se utiliza la categoriaVehiculo para permitir la insercion de mas clases en el futuro
-    'Logrando que al utilizar el metodo de calculadora, no tener que reescribir la calculadora
-    'Para cada categoria que se añada, solo le importará la tarifa base y el cargo adicional'
-    class Compacto extends CategoriaVehiculo{}
-    class Sedan extends CategoriaVehiculo{}
-    class SUV extends CategoriaVehiculo{}
+    class Compacto extends Vehiculo{}
+    class Sedan extends Vehiculo{}
+    class SUV extends Vehiculo{}
 
     class Cliente{
         - dni: number
@@ -50,20 +45,10 @@
         + calcularDisponibilidad()
     }
 
-    class Tarifa{
-        - monto
-        + getters_y_Setters()
-        + obtenerValor()
-    }
-
     class Mantenimiento{
         - fecha: Date
         - costo: number
         - descripcion: string
-    }
-    
-    class CalculadoraDeTarifas{   
-        + calcularTarifa(vehiculo: Vehiculo, kmFin: number  )
     }
 
 @enduml
