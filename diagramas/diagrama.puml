@@ -1,48 +1,54 @@
 @startuml Trabajo Practico Alquiler de Autos
 
-class Sistema {
-    - vehiculos: Vehiculo[]
-    - clientes: Cliente[]
-    - reservas: Reserva[]
+    class DriveHub{
+        - vehiculo: Vehiculo[]
+        - cliente: Cliente[]
+        - reserva: Reserva[]
 
-    + ingresarCliente()
-    + ingresarVehiculo()
-    + ingresarReserva()
- 
-}
+        + ingresarCliente(c: cliente)
+        + ingresarVehiculo(v: Vehiculo)
+        + crearReserva(c: Cliente, v: Vehiculo, fechaInicio:Date, fechaFin: Date)
+    }
 
-class Vehiculo{
+    abstract class Vehiculo{
         - nombre
         - Matricula: number
         - estado
-        - categoria: CategoriaVehiculo
-        - disponibilidad
+        - categoria: 
         - kilometraje
+        # tarifaBase: number
+        # cargoAdicional: number
+        - historialMantenimientos: Mantenimiento[]
 
-        + getters_y_Setters()
-}
+        + registrarMantenimiento(m: Mantenimiento)
+        + calcularTarifa(reserva: Reserva)
+    }
 
-abstract class CategoriaVehiculo{
-    abstract calcularTarifa()
-}
-class Compacto extends CategoriaVehiculo{}
-class Sedan extends CategoriaVehiculo{}
-class SUV extends CategoriaVehiculo{}
+    class Compacto extends Vehiculo{}
+    class Sedan extends Vehiculo{}
+    class SUV extends Vehiculo{}
 
-class Cliente {
-    - nombre
-    - dni 
+    class Cliente{
+        - dni: number
+        - nombre: string
+        - telefono: string
+    }
 
-    + hacerReserva()
-}
+    class Reserva{
+        - idReserva:number
+        - cliente: Cliente
+        - fechaInicio: Date
+        - fechaFin: Date
+        - vehiculo: Vehiculo
+        - kmRecorridos: number
+        
+        + calcularDisponibilidad()
+    }
 
-class Reserva{
-    - cliente
-    - vehiculo 
-    - fechaInicio
-    - fechaFin
-
-    + actualizarEstadoAuto()
-}
+    class Mantenimiento{
+        - fecha: Date
+        - costo: number
+        - descripcion: string
+    }
 
 @enduml
