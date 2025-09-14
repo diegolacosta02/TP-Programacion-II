@@ -11,4 +11,10 @@ export default class Mantenimiento{
     public getFecha():Date{
         return this.fecha
     }
+    public getCosto():number{
+        return this.costo
+    }
+    public getDescripcion():string{
+        return this.descripcion
+    }
 }
