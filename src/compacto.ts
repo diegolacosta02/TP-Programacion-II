@@ -6,13 +6,15 @@ export default class Compacto extends CategoriaVehiculo {
         super()
         this.tarifaBase = 30;
     }
+    
     calcularTarifa (reserva: Reserva): number {
-        const tarifa= this.tarifaBase * reserva.getDiasReservados();
-        let adicional= 0;
-        if ( reserva.getKmRecorridos()> 100){
-            adicional = reserva.getKmRecorridos() * 0.15;
-            return tarifa + adicional;
+        const tarifa = this.tarifaBase * reserva.getDiasReservados();
+        let adicional = 0;
+
+        if (reserva.getKmRecorridos() > 100) {
+            adicional = (reserva.getKmRecorridos() - 100) * 0.15;
         }
         return tarifa + adicional;
     }
+
 }

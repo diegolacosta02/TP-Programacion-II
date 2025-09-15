@@ -7,31 +7,43 @@
 
         + ingresarCliente(c: cliente)
         + ingresarVehiculo(v: Vehiculo)
-        + crearReserva(c: Cliente, v: Vehiculo, fechaInicio:Date, fechaFin: Date)
+        + ingresarReserva(c: Cliente)
     }
 
-    abstract class Vehiculo{
-        - nombre
-        - Matricula: number
-        - estado
-        - categoria: 
-        - kilometraje
-        # tarifaBase: number
-        # cargoAdicional: number
-        - historialMantenimientos: Mantenimiento[]
+    class Vehiculo{
+        # nombre
+        # Matricula: number
+        # estado
+        # categoria: CategoriaVehiculo
+        # kilometraje
+        # historialMantenimientos: Mantenimiento[]
 
-        + registrarMantenimiento(m: Mantenimiento)
+        + agregarMantenimiento(m: Mantenimiento)
+        + getHistorialMantenimiento()
+        + getCostoTotalMantenimiento
+        + setEstado()
+        + getEstado
         + calcularTarifa(reserva: Reserva)
     }
 
-    class Compacto extends Vehiculo{}
-    class Sedan extends Vehiculo{}
-    class SUV extends Vehiculo{}
+    abstract class CategoriaVehiculo {
+        # tarifaBase
+        abstract calcularTarifa()
+
+    }
+
+    class Compacto extends CategoriaVehiculo{}
+    class Sedan extends CategoriaVehiculo{}
+    class SUV extends CategoriaVehiculo{}
 
     class Cliente{
-        - dni: number
-        - nombre: string
-        - telefono: string
+        # dni: number
+        # nombre: string
+        # telefono: string
+        # reservas: Reserva[]
+
+        + crearReserva()
+        + getReserva()
     }
 
     class Reserva{
@@ -42,7 +54,12 @@
         - vehiculo: Vehiculo
         - kmRecorridos: number
         
-        + calcularDisponibilidad()
+        + setKmsRecorridos()
+        + getKmsRecorridos()
+        + getCliente()
+        + getVehiculo()
+        + getDiasReservados()
+
     }
 
     class Mantenimiento{
