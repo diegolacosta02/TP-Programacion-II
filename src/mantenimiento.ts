@@ -1,4 +1,4 @@
-export default class Mantenimiento {
+export default class Mantenimiento{
     protected fecha: Date
     protected costo: number
     protected descripcion: string
@@ -9,12 +9,12 @@ export default class Mantenimiento {
         this.descripcion = descripcion
     }
     public getFecha():Date{
-        return this.fecha;
+        return this.fecha
     }
     public getCosto():number{
-        return this.costo;
+        return this.costo
     }
     public getDescripcion():string{
-        return this.descripcion;
+        return this.descripcion
     }
 }

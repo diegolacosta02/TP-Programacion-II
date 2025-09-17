@@ -1,14 +1,15 @@
-import CategoriaVehiculo from "./categoriaVehiculo";
+import Vehiculo from "./vehiculo";
 import Reserva from "./reserva";
 
-export default class SUV extends CategoriaVehiculo {
-    constructor() {
-        super();
-        this.tarifaBase = 80;
+export default class SUV extends Vehiculo {
+    private static tarifaBase: number = 80;
+
+    constructor(nombre: string, matricula: number) {
+        super(nombre, matricula)
     }
 
-    calcularTarifa(reserva: Reserva): number {
-        const tarifa = this.tarifaBase * reserva.getDiasReservados();
+    public calcularTarifa(reserva: Reserva): number {
+        const tarifa = SUV.tarifaBase * reserva.getDiasReservados();
         const seguro = 15 * reserva.getDiasReservados();
         let adicional = 0;
 

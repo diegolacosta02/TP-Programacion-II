@@ -1,71 +1,80 @@
 @startuml Trabajo Practico Alquiler de Autos
 
-    class DriveHub{
-        - vehiculo: Vehiculo[]
-        - cliente: Cliente[]
-        - reserva: Reserva[]
+class DriveHub {
+    - vehiculo: Vehiculo[]
+    - cliente: Cliente[]
+    - reservas: Reserva[]
 
-        + ingresarCliente(c: cliente)
-        + ingresarVehiculo(v: Vehiculo)
-        + ingresarReserva(c: Cliente)
-    }
+    + ingresarVehiculo(v: Vehiculo): void
+    + ingresarCliente(c: Cliente): void
+    + ingresarReserva(c: Cliente): void
+}
 
-    class Vehiculo{
-        # nombre
-        # Matricula: number
-        # estado
-        # categoria: CategoriaVehiculo
-        # kilometraje
-        # historialMantenimientos: Mantenimiento[]
+abstract class Vehiculo {
+    # nombre: string
+    # matricula: number
+    # estado: string
+    # kilometraje: number
+    # historialMantenimiento: Mantenimiento[]
 
-        + agregarMantenimiento(m: Mantenimiento)
-        + getHistorialMantenimiento()
-        + getCostoTotalMantenimiento
-        + setEstado()
-        + getEstado
-        + calcularTarifa(reserva: Reserva)
-    }
+    + calcularTarifa(reserva: Reserva): number
+    + agregarMantenimiento(m: Mantenimiento): void
+    + getHistorialMantenimiento(): Mantenimiento[]
+    + getCostoTotalMantenimientos(): number
+    + setEstado(estado: string): void
+    + getEstado(): string
+}
 
-    abstract class CategoriaVehiculo {
-        # tarifaBase
-        abstract calcularTarifa()
 
-    }
+class Compacto extends Vehiculo {
+    - static tarifaBase: number
+    + calcularTarifa(reserva: Reserva): number
+}
 
-    class Compacto extends CategoriaVehiculo{}
-    class Sedan extends CategoriaVehiculo{}
-    class SUV extends CategoriaVehiculo{}
+class Sedan extends Vehiculo {
+    - static tarifaBase: number
+    + calcularTarifa(reserva: Reserva): number
+}
 
-    class Cliente{
-        # dni: number
-        # nombre: string
-        # telefono: string
-        # reservas: Reserva[]
+class SUV extends Vehiculo {
+    - static tarifaBase: number
+    + calcularTarifa(reserva: Reserva): number
+}
 
-        + crearReserva()
-        + getReserva()
-    }
+class Cliente {
+    # dni: number
+    # nombre: string
+    # telefono: number
+    # reservas: Reserva[]
 
-    class Reserva{
-        - idReserva:number
-        - cliente: Cliente
-        - fechaInicio: Date
-        - fechaFin: Date
-        - vehiculo: Vehiculo
-        - kmRecorridos: number
-        
-        + setKmsRecorridos()
-        + getKmsRecorridos()
-        + getCliente()
-        + getVehiculo()
-        + getDiasReservados()
+    + crearReserva(vehiculo: Vehiculo, fechaInicio: Date, fechaFin: Date): Reserva
+    + getReserva(): Reserva[]
+}
 
-    }
+class Reserva {
+    - cliente: Cliente
+    - vehiculo: Vehiculo
+    - fechaInicio: Date
+    - fechaFin: Date
+    - kmRecorridos: number
 
-    class Mantenimiento{
-        - fecha: Date
-        - costo: number
-        - descripcion: string
-    }
+    + getDiasReservados(): number
+    + setKmRecorridos(km: number): void
+    + getKmRecorridos(): number
+    + getVehiculo(): Vehiculo
+    + getCliente(): Cliente
+    + getFechaInicio(): Date
+    + getFechaFin(): Date
+}
+
+class Mantenimiento {
+    - fecha: Date
+    - costo: number
+    - descripcion: string
+
+    + getFecha(): Date
+    + getCosto(): number
+    + getDescripcion(): string
+}
 
 @enduml
