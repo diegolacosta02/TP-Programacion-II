@@ -1,5 +1,5 @@
 import Cliente from "./cliente"
-import Vehiculo from "./Vehiculo"
+import Vehiculo from "./vehiculo"
 
 export default class Reserva{
     protected idReserva: number

@@ -1,5 +1,5 @@
 import Reserva from "./reserva";
-import Vehiculo from "./Vehiculo";
+import Vehiculo from "./vehiculo";
 
 export default class Sedan extends Vehiculo{
     

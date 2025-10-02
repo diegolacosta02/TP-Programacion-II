@@ -1,6 +1,6 @@
 import Cliente from "./cliente";
 import Reserva from "./reserva";
-import Vehiculo from "./Vehiculo";
+import Vehiculo from "./vehiculo";
 
 export default class DriveHub{
     protected vehiculo: Array<Vehiculo>
