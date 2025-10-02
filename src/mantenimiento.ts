@@ -8,4 +8,13 @@ export default class Mantenimiento{
         this.costo = costo
         this.descripcion = descripcion
     }
+    public getFecha():Date{
+        return this.fecha
+    }
+    public getCosto():number{
+        return this.costo
+    }
+    public getDescripcion():string{
+        return this.descripcion
+    }
 }
