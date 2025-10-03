@@ -1,21 +1,36 @@
-import Vehiculo from "./vehiculo";
 import Reserva from "./reserva";
+import Vehiculo from "./vehiculo";
 
-export default class Compacto extends Vehiculo {
-    private static tarifaBase: number = 30;
-
-    constructor(nombre: string, matricula: number) {
-        super(nombre, matricula)
+export default class Compacto extends Vehiculo{
+    protected tarifaBase: number;
+    protected cargoAdicional: number;
+    protected kmPermitido:number
+    
+    constructor(){
+        super()
+        this.tarifaBase = 30
+        this.cargoAdicional = 0.15
+        this.kmPermitido = 100
     }
 
-    public calcularTarifa(reserva: Reserva): number {
-        const tarifa = Compacto.tarifaBase * reserva.getDiasReservados();
-        let adicional = 0;
+    public getTarifaBase():number{
+        return this.tarifaBase
+    }
+    public getCargoAdicional():number{
+        return this.cargoAdicional
+    }
+    public getKmPermitido():number{
+        return this.kmPermitido
+    }
+    public calcularTarifa(reserva:Reserva): number {
+        const tarifaBase = this.getTarifaBase() * reserva.getDiasReservados()
+        const kmPermitidos = this.getKmPermitido() * reserva.getDiasReservados()
+        let extra = 0
 
-        if (reserva.getKmRecorridos() > 100) {
-            adicional = (reserva.getKmRecorridos() - 100) * 0.15;
+        if (reserva.getKmRecorridos() > kmPermitidos) {
+            extra = (reserva.getKmRecorridos() - kmPermitidos) * this.getCargoAdicional()
         }
 
-        return tarifa + adicional;
+        return tarifaBase + extra
     }
 }

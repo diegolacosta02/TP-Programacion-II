@@ -1,22 +1,27 @@
-import Vehiculo from "./vehiculo";
 import Reserva from "./reserva";
+import Vehiculo from "./vehiculo";
 
-export default class SUV extends Vehiculo {
-    private static tarifaBase: number = 80;
-
-    constructor(nombre: string, matricula: number) {
-        super(nombre, matricula)
+export default class SUV extends Vehiculo{
+    protected tarifaBase: number
+    protected cargoAdicional: number
+    protected cargoFijoAdicional: number
+    
+    constructor(){
+        super()
+        this.tarifaBase = 80
+        this.cargoFijoAdicional = 15
+        this.cargoAdicional = 0.25
     }
 
-    public calcularTarifa(reserva: Reserva): number {
-        const tarifa = SUV.tarifaBase * reserva.getDiasReservados();
-        const seguro = 15 * reserva.getDiasReservados();
-        let adicional = 0;
+    public calcularTarifa(reserva:Reserva): number {
+        const tarifaBase = 80 * reserva.getDiasReservados()
+        const kmPermitidos = 100 * reserva.getDiasReservados()
+        let extra = 0
 
-        if (reserva.getKmRecorridos() > 500) {
-            adicional = (reserva.getKmRecorridos() - 500) * 0.25;
+        if (reserva.getKmRecorridos() > kmPermitidos) {
+            extra = (reserva.getKmRecorridos() - kmPermitidos) * 0.15
         }
 
-        return tarifa + seguro + adicional;
+        return tarifaBase + extra
     }
 }
