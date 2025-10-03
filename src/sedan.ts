@@ -3,8 +3,8 @@ import Vehiculo from "./vehiculo";
 
 export default class Sedan extends Vehiculo{
     
-    private tarifaBase:number
-    private cargoAdicional: number
+    protected tarifaBase:number
+    protected cargoAdicional: number
     constructor(){
         super()
         this.tarifaBase = 50
@@ -13,13 +13,13 @@ export default class Sedan extends Vehiculo{
     public getTarifaBase():number{
         return this.tarifaBase
     }
-    public getcargoAdicional():number{
+    public getCargoAdicional():number{
         return this.cargoAdicional
     }
 
     public calcularTarifa(reserva:Reserva): number {
         const tarifaBase= this.getTarifaBase() * reserva.getDiasReservados()
-        const extra = this.cargoAdicional() * reserva.getKmRecorridos()         
+        const extra = this.getCargoAdicional() * reserva.getKmRecorridos()         
        
         return tarifaBase+extra
     }
