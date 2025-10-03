@@ -1,54 +1,80 @@
 @startuml Trabajo Practico Alquiler de Autos
 
-    class DriveHub{
-        - vehiculo: Vehiculo[]
-        - cliente: Cliente[]
-        - reserva: Reserva[]
+class DriveHub {
+    - vehiculo: Vehiculo[]
+    - cliente: Cliente[]
+    - reservas: Reserva[]
 
-        + ingresarCliente(c: cliente)
-        + ingresarVehiculo(v: Vehiculo)
-        + crearReserva(c: Cliente, v: Vehiculo, fechaInicio:Date, fechaFin: Date)
-    }
+    + ingresarVehiculo(v: Vehiculo): void
+    + ingresarCliente(c: Cliente): void
+    + ingresarReserva(c: Cliente): void
+}
 
-    class Vehiculo{
-        - nombre
-        - Matricula: number
-        - estado
-        - categoria: CategoriaVehiculo
-        - kilometraje
-        # tarifaBase: number
-        # cargoAdicional: number
-        - historialMantenimientos: Mantenimiento[]
+abstract class Vehiculo {
+    # nombre: string
+    # matricula: number
+    # estado: string
+    # kilometraje: number
+    # historialMantenimiento: Mantenimiento[]
 
-        + registrarMantenimiento(m: Mantenimiento)
-        + calcularTarifa(reserva: Reserva)
-    }
+    + calcularTarifa(reserva: Reserva): number
+    + agregarMantenimiento(m: Mantenimiento): void
+    + getHistorialMantenimiento(): Mantenimiento[]
+    + getCostoTotalMantenimientos(): number
+    + setEstado(estado: string): void
+    + getEstado(): string
+}
 
-    class Compacto extends Vehiculo{}
-    class Sedan extends Vehiculo{}
-    class SUV extends Vehiculo{}
 
-    class Cliente{
-        - dni: number
-        - nombre: string
-        - telefono: string
-    }
+class Compacto extends Vehiculo {
+    - static tarifaBase: number
+    + calcularTarifa(reserva: Reserva): number
+}
 
-    class Reserva{
-        - idReserva:number
-        - cliente: Cliente
-        - fechaInicio: Date
-        - fechaFin: Date
-        - vehiculo: Vehiculo
-        - kmRecorridos: number
-        
-        + calcularDisponibilidad()
-    }
+class Sedan extends Vehiculo {
+    - static tarifaBase: number
+    + calcularTarifa(reserva: Reserva): number
+}
 
-    class Mantenimiento{
-        - fecha: Date
-        - costo: number
-        - descripcion: string
-    }
+class SUV extends Vehiculo {
+    - static tarifaBase: number
+    + calcularTarifa(reserva: Reserva): number
+}
+
+class Cliente {
+    # dni: number
+    # nombre: string
+    # telefono: number
+    # reservas: Reserva[]
+
+    + crearReserva(vehiculo: Vehiculo, fechaInicio: Date, fechaFin: Date): Reserva
+    + getReserva(): Reserva[]
+}
+
+class Reserva {
+    - cliente: Cliente
+    - vehiculo: Vehiculo
+    - fechaInicio: Date
+    - fechaFin: Date
+    - kmRecorridos: number
+
+    + getDiasReservados(): number
+    + setKmRecorridos(km: number): void
+    + getKmRecorridos(): number
+    + getVehiculo(): Vehiculo
+    + getCliente(): Cliente
+    + getFechaInicio(): Date
+    + getFechaFin(): Date
+}
+
+class Mantenimiento {
+    - fecha: Date
+    - costo: number
+    - descripcion: string
+
+    + getFecha(): Date
+    + getCosto(): number
+    + getDescripcion(): string
+}
 
 @enduml
