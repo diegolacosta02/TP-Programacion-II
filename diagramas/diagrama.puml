@@ -1,37 +1,80 @@
 @startuml Trabajo Practico Alquiler de Autos
 
-    abstract class Vehiculo{
-        - nombre
-        - Matricula: number
-        - estado
-        - categoria: CategoriaVehiculo
-        - disponibilidad
-        - kilometraje
+class DriveHub {
+    - vehiculo: Vehiculo[]
+    - cliente: Cliente[]
+    - reservas: Reserva[]
 
-        + getters_y_Setters()
-    }
+    + ingresarVehiculo(v: Vehiculo): void
+    + ingresarCliente(c: Cliente): void
+    + ingresarReserva(c: Cliente): void
+}
 
-    abstract class CategoriaVehiculo extends Vehiculo{
-    }
+abstract class Vehiculo {
+    # nombre: string
+    # matricula: number
+    # estado: string
+    # kilometraje: number
+    # historialMantenimiento: Mantenimiento[]
 
-    class Compacto extends CategoriaVehiculo{}
-    class Sedan extends CategoriaVehiculo{}
-    class SUV extends CategoriaVehiculo{}
+    + calcularTarifa(reserva: Reserva): number
+    + agregarMantenimiento(m: Mantenimiento): void
+    + getHistorialMantenimiento(): Mantenimiento[]
+    + getCostoTotalMantenimientos(): number
+    + setEstado(estado: string): void
+    + getEstado(): string
+}
 
-    class Reserva{
-        - cliente
-        - fechaInicio
-        - fechaFin
-        + ReservaVehiculo()
-    }
 
-    class Tarifa{
-        - monto
-        + getters_y_Setters()
-        + obtenerValor()
-    }
-    class CalculadoraDeTarifas{
-            + calcularTarifa(vehiculo: Vehiculo)
-    }
+class Compacto extends Vehiculo {
+    - static tarifaBase: number
+    + calcularTarifa(reserva: Reserva): number
+}
+
+class Sedan extends Vehiculo {
+    - static tarifaBase: number
+    + calcularTarifa(reserva: Reserva): number
+}
+
+class SUV extends Vehiculo {
+    - static tarifaBase: number
+    + calcularTarifa(reserva: Reserva): number
+}
+
+class Cliente {
+    # dni: number
+    # nombre: string
+    # telefono: number
+    # reservas: Reserva[]
+
+    + crearReserva(vehiculo: Vehiculo, fechaInicio: Date, fechaFin: Date): Reserva
+    + getReserva(): Reserva[]
+}
+
+class Reserva {
+    - cliente: Cliente
+    - vehiculo: Vehiculo
+    - fechaInicio: Date
+    - fechaFin: Date
+    - kmRecorridos: number
+
+    + getDiasReservados(): number
+    + setKmRecorridos(km: number): void
+    + getKmRecorridos(): number
+    + getVehiculo(): Vehiculo
+    + getCliente(): Cliente
+    + getFechaInicio(): Date
+    + getFechaFin(): Date
+}
+
+class Mantenimiento {
+    - fecha: Date
+    - costo: number
+    - descripcion: string
+
+    + getFecha(): Date
+    + getCosto(): number
+    + getDescripcion(): string
+}
 
 @enduml
