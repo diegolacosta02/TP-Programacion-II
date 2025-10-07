@@ -5,8 +5,8 @@ export default class Sedan extends Vehiculo{
     
     protected tarifaBase:number
     protected cargoAdicional: number
-    constructor(){
-        super()
+    constructor(nombre:string, matricula:number){
+        super(nombre, matricula)
         this.tarifaBase = 50
         this.cargoAdicional = 0.20
     }
