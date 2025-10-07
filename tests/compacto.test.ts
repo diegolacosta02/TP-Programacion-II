@@ -1,6 +1,7 @@
 import Compacto from "../src/compacto"
 import Reserva from "../src/reserva"
 import Cliente from "../src/cliente"
+import { mock } from 'jest-mock-extended'
 
 describe("Calculadora de tarifas para Compactos",() =>{
     let fechaInicio:Date
@@ -12,8 +13,8 @@ describe("Calculadora de tarifas para Compactos",() =>{
     beforeEach(()=>{
         fechaInicio = new Date("2025-09-13")
         fechaFin = new Date("2025-09-20")
-        cliente = new Cliente()
-        compacto = new Compacto()
+        cliente = mock<Cliente>();
+        compacto = new Compacto("x",1011);
         reserva = new Reserva(cliente, compacto, fechaInicio, fechaFin)
     })
 
