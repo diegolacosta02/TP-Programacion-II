@@ -1,4 +1,5 @@
 import Cliente from "./cliente";
+import { EstadoVehiculo } from "./estado-vehiculo";
 import Vehiculo from "./vehiculo";
 
 export default class Reserva {
@@ -13,7 +14,7 @@ export default class Reserva {
         this.vehiculo = vehiculo;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
-        this.vehiculo.setEstado("En Alquiler");
+        this.vehiculo.setEstado(EstadoVehiculo["EN ALQUILER"]);
     }
 
     public getDiasReservados(): number {

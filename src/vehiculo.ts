@@ -1,17 +1,18 @@
+import { EstadoVehiculo } from "./estado-vehiculo";
 import Mantenimiento from "./mantenimiento";
 import Reserva from "./reserva";
 
 export default abstract class Vehiculo {
     protected nombre: string;
     protected matricula: number;
-    protected estado: string;
+    protected estado: EstadoVehiculo
     protected kilometraje: number;
     protected historialMantenimiento: Mantenimiento[];
 
     constructor(nombre: string, matricula: number) {
         this.nombre = nombre;
         this.matricula = matricula;
-        this.estado = "Disponible";
+        this.estado = EstadoVehiculo.DISPONIBLE
         this.kilometraje = 0;
         this.historialMantenimiento = [];
     }
@@ -24,10 +25,10 @@ export default abstract class Vehiculo {
     
     public agregarMantenimiento(mantenimiento: Mantenimiento): void {
         this.historialMantenimiento.push(mantenimiento);
-        this.estado = "En mantenimiento"
+        this.estado = EstadoVehiculo["EN MANTENIMIENTO"]
     }
 
-    public setEstado(estado: string){ //termina mantenimiento o se limpia
+    public setEstado(estado: EstadoVehiculo){ //termina mantenimiento o se limpia
         this.estado= estado;
     }
 

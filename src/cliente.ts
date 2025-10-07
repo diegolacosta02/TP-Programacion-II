@@ -1,3 +1,4 @@
+import { EstadoVehiculo } from "./estado-vehiculo"
 import Reserva from "./reserva"
 import Vehiculo from "./vehiculo"
 export default class Cliente{
@@ -14,7 +15,7 @@ export default class Cliente{
     }
 
     public crearReserva(vehiculo: Vehiculo, fechaInicio: Date, fechaFin: Date): Reserva{
-        if(vehiculo.getEstado() != "Disponible") {
+        if(vehiculo.getEstado() != EstadoVehiculo.DISPONIBLE) {
             throw new Error("El vehículo no está disponible")
         }
         const reserva= new Reserva(this, vehiculo, fechaInicio, fechaFin)
