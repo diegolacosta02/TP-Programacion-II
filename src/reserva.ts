@@ -3,11 +3,11 @@ import { EstadoVehiculo } from "./estado-vehiculo";
 import Vehiculo from "./vehiculo";
 
 export default class Reserva {
-    protected cliente: Cliente;
-    protected fechaInicio: Date;
-    protected fechaFin: Date;
-    protected vehiculo: Vehiculo;
-    protected kmRecorridos: number = 0;
+    private cliente: Cliente;
+    private fechaInicio: Date;
+    private fechaFin: Date;
+    private vehiculo: Vehiculo;
+    private kmRecorridos: number = 0;
 
     constructor(cliente: Cliente, vehiculo: Vehiculo, fechaInicio: Date, fechaFin: Date) {
         this.cliente = cliente;

@@ -5,14 +5,14 @@ import Reserva from "./reserva";
 export default abstract class Vehiculo {
     protected nombre: string;
     protected matricula: number;
-    protected estado: EstadoVehiculo
+    protected estado: EstadoVehiculo;
     protected kilometraje: number;
     protected historialMantenimiento: Mantenimiento[];
 
     constructor(nombre: string, matricula: number) {
         this.nombre = nombre;
         this.matricula = matricula;
-        this.estado = EstadoVehiculo.DISPONIBLE
+        this.estado = EstadoVehiculo.DISPONIBLE;
         this.kilometraje = 0;
         this.historialMantenimiento = [];
     }
@@ -28,7 +28,7 @@ export default abstract class Vehiculo {
         this.estado = EstadoVehiculo["EN MANTENIMIENTO"]
     }
 
-    public setEstado(estado: EstadoVehiculo){ //termina mantenimiento o se limpia
+    public setEstado(estado: EstadoVehiculo){ 
         this.estado= estado;
     }
 
@@ -37,6 +37,6 @@ export default abstract class Vehiculo {
     }
     
     public getCostoTotalMantenimientos(): number {
-        return this.historialMantenimiento.reduce((total, m) => total + m.getCosto(), 0); // por cada mantenimiento acumulo el costo en total
+        return this.historialMantenimiento.reduce((total, m) => total + m.getCosto(), 0);
     }
 }

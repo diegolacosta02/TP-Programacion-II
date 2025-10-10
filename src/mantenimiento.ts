@@ -1,7 +1,7 @@
 export default class Mantenimiento{
-    protected fecha: Date
-    protected costo: number
-    protected descripcion: string
+    private fecha: Date
+    private costo: number
+    private descripcion: string
 
     constructor(fecha: Date, costo:number, descripcion:string){
         this.fecha = fecha
