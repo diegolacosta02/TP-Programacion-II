@@ -17,7 +17,7 @@ describe("Reserva getters y setters", () => {
     fechaFin = new Date("2025-09-05");
 
     cliente = new Cliente(123, "Cliente ", 12345678);
-    vehiculo = new Compacto("Auto Test", 456);
+    vehiculo = new Compacto(456);
 
     reserva = new Reserva(cliente, vehiculo, fechaInicio, fechaFin);
   });

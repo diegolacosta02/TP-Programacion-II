@@ -14,7 +14,7 @@ describe("Calculadora de tarifas para Compactos",() =>{
         fechaInicio = new Date("2025-09-13")
         fechaFin = new Date("2025-09-20")
         cliente = mock<Cliente>();
-        compacto = new Compacto("x",1011);
+        compacto = new Compacto(1011);
         reserva = new Reserva(cliente, compacto, fechaInicio, fechaFin)
     })
 

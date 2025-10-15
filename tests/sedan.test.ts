@@ -14,7 +14,7 @@ describe("Calculadora de tarifas para Sedán", () => {
         fechaInicio = new Date("2025-09-13");
         fechaFin = new Date("2025-09-20");
         cliente = new Cliente(456, "Cliente", 87654321)
-        vehiculo = new Sedan("Vehículo Sedán", 456)
+        vehiculo = new Sedan(456)
         reserva = new Reserva(cliente, vehiculo, fechaInicio, fechaFin);
     });
 
