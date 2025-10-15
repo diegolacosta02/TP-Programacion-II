@@ -15,6 +15,7 @@ export default class Reserva {
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.vehiculo.setEstado(EstadoVehiculo["EN ALQUILER"]);
+        this.vehiculo.setAlquileresDesdeUltMantenimiento(1);
     }
 
     public getDiasReservados(): number {
@@ -24,6 +25,7 @@ export default class Reserva {
 
     public setKmRecorridos(km: number) {
         this.kmRecorridos = km;
+        this.vehiculo.setKilometraje(km);
     }
 
     public getKmRecorridos(): number {

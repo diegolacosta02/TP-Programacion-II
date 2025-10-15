@@ -14,6 +14,7 @@ class DriveHub {
 
     + ingresarVehiculo(v: Vehiculo): void
     + ingresarReserva(c: Cliente, v: Vehiculo): void
+    + agregarMantenimientoAVehiculo () : void
 }
 
 abstract class Vehiculo {

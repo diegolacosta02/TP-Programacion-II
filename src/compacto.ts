@@ -6,8 +6,8 @@ export default class Compacto extends Vehiculo {
     private cargoAdicional: number;
     private kmPermitidos:number;
     
-    constructor(nombre:string, matricula:number){
-        super(nombre, matricula)
+    constructor(matricula:number){
+        super(matricula)
         this.tarifaBase = 30
         this.cargoAdicional = 0.15
         this.kmPermitidos = 100
@@ -17,11 +17,11 @@ export default class Compacto extends Vehiculo {
         const tarifaBase = this.tarifaBase * reserva.getDiasReservados()
         const kmPermitidos = this.kmPermitidos * reserva.getDiasReservados()
         let extra = 0
-
         if (reserva.getKmRecorridos() > kmPermitidos) {
             extra = (reserva.getKmRecorridos() - kmPermitidos) * this.cargoAdicional
         }
+        const tarifaTemporada = this.gestorTemporadas.getPorcentajeTemporada(reserva) * tarifaBase / 100;
 
-        return tarifaBase + extra
+        return tarifaBase + extra + tarifaTemporada
     }
 }

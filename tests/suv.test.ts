@@ -8,8 +8,9 @@ describe("Calculadora de tarifas para SUV", () => {
 
     beforeEach(() => {
         reserva = mockDeep<Reserva>();
-        vehiculo = new SUV("Vehículo 1", 789);
 
+        vehiculo = new SUV(789);
+        reserva.getFechaInicio.mockReturnValue(new Date("2025-04-01"));
         reserva.getDiasReservados.mockReturnValue(7);
     });
 
