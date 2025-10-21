@@ -12,7 +12,7 @@ export default class Compacto extends Vehiculo {
         this.cargoAdicional = 0.15
         this.kmPermitidos = 100
     }
-
+    
     public calcularTarifa(reserva:Reserva): number {
         const tarifaBase = this.tarifaBase * reserva.getDiasReservados()
         const kmPermitidos = this.kmPermitidos * reserva.getDiasReservados()

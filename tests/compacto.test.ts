@@ -1,33 +1,28 @@
 import Compacto from "../src/compacto"
 import Reserva from "../src/reserva"
-import Cliente from "../src/cliente"
-import { mock } from 'jest-mock-extended'
+import { DeepMockProxy, mock, mockDeep } from 'jest-mock-extended'
 
 describe("Calculadora de tarifas para Compactos",() =>{
-    let fechaInicio:Date
-    let fechaFin:Date
-    let cliente:Cliente
     let compacto:Compacto
-    let reserva:Reserva
+    let reserva: DeepMockProxy<Reserva>;
 
     beforeEach(()=>{
-        fechaInicio = new Date("2025-09-13")
-        fechaFin = new Date("2025-09-20")
-        cliente = mock<Cliente>();
         compacto = new Compacto(1011);
-        reserva = new Reserva(cliente, compacto, fechaInicio, fechaFin)
+        reserva = mockDeep<Reserva>();
+        reserva.getFechaInicio.mockReturnValue(new Date("2025-09-13"))
+        reserva.getDiasReservados.mockReturnValue(7);
     })
 
     it("Debe cobrar solo la tarifa base si no se superan los km diarios", () =>{
-        reserva.setKmRecorridos(500)
+        reserva.getKmRecorridos.mockReturnValue(500)
         expect(compacto.calcularTarifa(reserva)).toBe(30*7)
     })
     it("Debe cobrar solo la tarifa base si se recorren exactamente los km diarios", () =>{
-        reserva.setKmRecorridos(700)
+        reserva.getKmRecorridos.mockReturnValue(700)
         expect(compacto.calcularTarifa(reserva)).toBe(30*7)
     })
     it("Debe cobrar extra si se superan los km diarios", () =>{
-        reserva.setKmRecorridos(800)
+        reserva.getKmRecorridos.mockReturnValue(800)
         const extra = (800 - 700) * 0.15
         expect(compacto.calcularTarifa(reserva)).toBe(30*7 + extra)
     })
