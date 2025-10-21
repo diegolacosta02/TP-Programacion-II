@@ -6,6 +6,20 @@ enum EstadoVehiculo {
     EN_MANTENIMIENTO
     NECESITA_LIMPIEZA
 }
+enum Temporada {
+   BAJA
+   ALTA 
+   MEDIA 
+}
+class gestorTemporadas {
+    + getPorcentajeTemporada(reserva:Reserva):number
+    + getTemporada(reserva:Reserva)
+}
+
+class verificadorVehiculo {
+    + puedeReservarse(vehiculo:Vehiculo):boolean
+
+}
 
 class DriveHub {
     - vehiculo: Vehiculo[]
@@ -33,20 +47,20 @@ abstract class Vehiculo {
 }
 
 
-class Compacto extends Vehiculo {
+class Compacto  {
     - tarifaBase: number
     - cargoAdicional: number
     - kmPermitidos:number
     + calcularTarifa(reserva: Reserva): number
 }
 
-class Sedan extends Vehiculo {
+class Sedan  {
     - tarifaBase: number
     - cargoAdicional: number
     + calcularTarifa(reserva: Reserva): number
 }
 
-class SUV extends Vehiculo {
+class SUV  {
     - tarifaBase: number
     - cargoAdicional: number
     - cargoFijoSeguro: number
@@ -87,18 +101,19 @@ class Mantenimiento {
     + getCosto(): number
     + getDescripcion(): string
 }
-
 Vehiculo <|-- Compacto
 Vehiculo <|-- Sedan
 Vehiculo <|-- SUV
 
-DriveHub  *--  Vehiculo
-DriveHub  *--  Cliente
+DriveHub  --  Vehiculo
+DriveHub--  Cliente
 DriveHub  *--  Reserva
-Vehiculo  o--  Mantenimiento
+Vehiculo  o-u-  Mantenimiento
 
 Reserva  -->  Cliente
-Reserva  -->  Vehiculo
-Cliente  -->  Reserva
+Reserva  -l->  Vehiculo
+Cliente  -r->  Reserva
+
+
 
 @enduml
