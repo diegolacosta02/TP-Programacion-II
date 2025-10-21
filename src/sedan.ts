@@ -1,26 +1,21 @@
-import Reserva from "./reserva";
 import Vehiculo from "./vehiculo";
+import Reserva from "./reserva";
 
-export default class Sedan extends Vehiculo{
-    
-    protected tarifaBase:number
-    protected cargoAdicional: number
-    constructor(nombre:string, matricula:number){
-        super(nombre, matricula)
+export default class Sedan extends Vehiculo {
+
+    private tarifaBase:number
+    private cargoAdicional: number
+
+    constructor(matricula:number){
+        super(matricula)
         this.tarifaBase = 50
         this.cargoAdicional = 0.20
     }
-    public getTarifaBase():number{
-        return this.tarifaBase
-    }
-    public getCargoAdicional():number{
-        return this.cargoAdicional
-    }
-
-    public calcularTarifa(reserva:Reserva): number {
-        const tarifaBase= this.getTarifaBase() * reserva.getDiasReservados()
-        const extra = this.getCargoAdicional() * reserva.getKmRecorridos()         
+    public calcularTarifa(reserva: Reserva): number {
+        const tarifaBase= this.tarifaBase * reserva.getDiasReservados()
+        const extra = this.cargoAdicional * reserva.getKmRecorridos()
+        const tarifaTemporada = this.gestorTemporadas.getPorcentajeTemporada(reserva) * tarifaBase / 100;         
        
-        return tarifaBase+extra
+        return tarifaBase + extra + tarifaTemporada;
     }
 }
