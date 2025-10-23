@@ -15,7 +15,7 @@ describe("Calculadora de tarifas para Sedán", () => {
 
     it("Debe cobrar tarifa base más cargo por km (sin límite) en temporada media", () => {
         reserva.getKmRecorridos.mockReturnValue(200);
-        expect(vehiculo.calcularTarifa(reserva)).toBe(50 * 7 + 200 * 0.20);
+        expect(vehiculo.calcularTarifa(reserva)).toBe(50 * 7 + 200 * 0.2);
     });
 
     it("Debe calcular correctamente si no recorrió km en temporada media", () => {

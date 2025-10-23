@@ -23,7 +23,7 @@ describe("Calculadora de tarifas para Compactos",() =>{
     })
     it("Debe cobrar extra si se superan los km diarios", () =>{
         reserva.getKmRecorridos.mockReturnValue(800)
-        const extra = (800 - 700) * 0.15
-        expect(compacto.calcularTarifa(reserva)).toBe(30*7 + extra)
+        const extra = 800 * 0.15
+        expect(compacto.calcularTarifa(reserva)).toBe(30 * 7 + extra)
     })
 })

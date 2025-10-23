@@ -5,30 +5,18 @@ export default class SUV extends Vehiculo {
 
     private tarifaBase: number
     private cargoAdicional: number
-    private cargoFijoSeguro: number
-    private kmPermitidos:number
 
     constructor(matricula:number){
         super(matricula)
-        this.tarifaBase = 80
-        this.cargoFijoSeguro = 15
-        this.cargoAdicional = 0.25
-        this.kmPermitidos = 500
-    }
-
-    public getCargoAdicional():number{
-        return this.cargoAdicional;
+        this.tarifaBase = 50
+        this.cargoAdicional = 0.2
     }
 
     public calcularTarifa(reserva:Reserva): number {
         const tarifaBase = this.tarifaBase * reserva.getDiasReservados()
-        const cargoSeguro = this.cargoFijoSeguro * reserva.getDiasReservados()
-        let extra = 0
-        if (reserva.getKmRecorridos() > this.kmPermitidos) {
-            extra = reserva.getKmRecorridos() * this.getCargoAdicional();
-        }
+        const extra = reserva.getKmRecorridos() * this.cargoAdicional;
         const tarifaTemporada = this.gestorTemporadas.getPorcentajeTemporada(reserva) * tarifaBase / 100;
 
-        return tarifaBase + cargoSeguro + extra + tarifaTemporada;
+        return tarifaBase + extra + tarifaTemporada;
     }
 }
