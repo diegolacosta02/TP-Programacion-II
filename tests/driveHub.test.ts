@@ -34,7 +34,21 @@ describe("Test de clase DriveHub", () => {
         expect(driveHub["clientes"][0]).toBe(cliente);
         expect(driveHub["clientes"]).toContain(cliente);
   });
+  
+    it("debería lanzar un error si el vehículo no está disponible", () => {
+        driveHub["verificadorVehiculos"].puedeReservarse = jest.fn().mockReturnValue(false);
+        try {
+            driveHub.ingresarReserva(cliente, vehiculo, fechaInicio, fechaFin);
+        } catch (error: any) {
+            expect(error.message).toBe("El vehículo no está disponible");
+        }
+    });
 
-  //faltan metodos
+    it("debería agregar un mantenimiento al auto correctamente", () => {
+        driveHub.ingresarVehiculo(vehiculo);
+        driveHub.agregarMantenimientoAVehiculo(vehiculo, mantenimiento)
+        expect(vehiculo.setMantenimiento).toHaveBeenCalledWith(mantenimiento);
+
+    });
 
 });
