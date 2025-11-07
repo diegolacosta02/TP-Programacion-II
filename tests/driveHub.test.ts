@@ -3,6 +3,7 @@ import DriveHub from "../src/driveHub"
 import Cliente from "../src/cliente";
 import Vehiculo from "../src/vehiculo";
 import Mantenimiento from "../src/mantenimiento";
+import { EstadoVehiculo } from "../src/estado-vehiculo";
 
 describe("Test de clase DriveHub", () => {
     let driveHub: DriveHub;
@@ -35,12 +36,21 @@ describe("Test de clase DriveHub", () => {
         expect(driveHub["clientes"]).toContain(cliente);
   });
   
-    it("debería lanzar un error si el vehículo no está disponible", () => {
-        driveHub["verificadorVehiculos"].puedeReservarse = jest.fn().mockReturnValue(false);
+    it("debería lanzar un error si el vehículo está en mantenimiento", () => {
+        vehiculo.setEstado(EstadoVehiculo["EN MANTENIMIENTO"]);
         try {
             driveHub.ingresarReserva(cliente, vehiculo, fechaInicio, fechaFin);
         } catch (error: any) {
-            expect(error.message).toBe("El vehículo no está disponible");
+            expect(error.message).toBe("El vehículo no está disponible. Se encuentra en mantenimiento.");
+        }
+    });
+
+    it("debería lanzar un error si el vehículo está reservado", () => {
+        vehiculo.setEstado(EstadoVehiculo["EN ALQUILER"]);
+        try {
+            driveHub.ingresarReserva(cliente, vehiculo, fechaInicio, fechaFin);
+        } catch (error: any) {
+            expect(error.message).toBe("El vehículo no está disponible. Se encuentra en alquiler.");
         }
     });
 

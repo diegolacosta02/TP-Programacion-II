@@ -23,12 +23,12 @@ export default class DriveHub{
     }
 
     public ingresarReserva(cliente: Cliente, vehiculo: Vehiculo, fechaInicio: Date, fechaFin: Date): void{
-        if(!this.verificadorVehiculos.puedeReservarse(vehiculo)) {
-            throw new Error("El vehículo no está disponible")
-        }
+        this.verificadorVehiculos.puedeReservarse(vehiculo);
         const reserva = new Reserva(cliente, vehiculo, fechaInicio, fechaFin)
         this.reservas.push(reserva);
-        this.clientes.push(cliente);
+        if (!this.clientes.includes(cliente)) {
+            this.clientes.push(cliente);
+        }
     }
 
     public agregarMantenimientoAVehiculo(vehiculo : Vehiculo, mantenimiento: Mantenimiento): void {

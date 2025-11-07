@@ -4,12 +4,15 @@ import Vehiculo from "./vehiculo";
 export default class VerificadorVehiculo {
 
     public puedeReservarse(vehiculo: Vehiculo): boolean {
-        if (vehiculo.getEstado() !== EstadoVehiculo.DISPONIBLE) {
-            return false;
+        const fechaLimite = new Date(vehiculo.getFechaUltMantenimiento());
+        fechaLimite.setMonth(fechaLimite.getMonth() + 12);
+        if (vehiculo.getEstado() === EstadoVehiculo["EN ALQUILER"]) {
+            throw new Error("El vehículo no está disponible. Se encuentra en alquiler.")
         }
-        if (vehiculo.getKilometrajeUltMantenimiento() > 10000 || vehiculo.getAlquileresDesdeUltMantenimiento() >= 5) {
+        if (vehiculo.getKilometrajeUltMantenimiento() > 10000 || vehiculo.getAlquileresDesdeUltMantenimiento() >= 5
+        || fechaLimite < new Date() ) {
             vehiculo.setEstado(EstadoVehiculo["EN MANTENIMIENTO"]);
-            return false;
+            throw new Error("El vehículo no está disponible. Se encuentra en mantenimiento.")
         }
         return true;
     }
