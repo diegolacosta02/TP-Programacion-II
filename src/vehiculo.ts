@@ -24,6 +24,11 @@ export default abstract class Vehiculo {
         this.gestorTemporadas = new GestorTemporadas();
     }
 
+    /**
+     * Calcula la tarifa de una reserva según el tipo de vehículo.
+     * @param reserva La reserva que se va a cobrar.
+     * @returns El valor total de la tarifa incluyendo cargos extra y temporada.
+    * */
     public abstract calcularTarifa(reserva: Reserva): number;
 
     public setMantenimiento(m : Mantenimiento) {
