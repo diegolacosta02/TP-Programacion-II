@@ -1,7 +1,7 @@
 import Vehiculo from "./vehiculo";
 import Reserva from "./reserva";
 
-export default class SUV extends Vehiculo {
+export default class Sedan extends Vehiculo {
 
     private tarifaBase: number
     private cargoAdicional: number
