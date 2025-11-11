@@ -1,30 +1,45 @@
 import Sedan from "../src/sedan";
 import Reserva from "../src/reserva";
-import Cliente from "../src/cliente";
-import Vehiculo from "../src/vehiculo";
+import { DeepMockProxy, mockDeep } from "jest-mock-extended";
 
 describe("Calculadora de tarifas para Sedán", () => {
-    let fechaInicio: Date;
-    let fechaFin: Date;
-    let cliente: Cliente;
-    let vehiculo: Vehiculo;
-    let reserva: Reserva;
+    let vehiculo: Sedan;
+    let reserva: DeepMockProxy<Reserva>;
 
     beforeEach(() => {
-        fechaInicio = new Date("2025-09-13");
-        fechaFin = new Date("2025-09-20");
-        cliente = new Cliente(456, "Cliente", 87654321)
-        vehiculo = new Sedan("Vehículo Sedán", 456)
-        reserva = new Reserva(cliente, vehiculo, fechaInicio, fechaFin);
+        vehiculo = new Sedan(456)
+        reserva = mockDeep<Reserva>();
+        reserva.getDiasReservados.mockReturnValue(7);
+        
     });
 
-    it("Debe cobrar tarifa base más cargo por km (sin límite)", () => {
-        reserva.setKmRecorridos(200);
-        expect(vehiculo.calcularTarifa(reserva)).toBe(50 * 7 + 200 * 0.20);
+    it("Debe cobrar tarifa base más cargo por km (sin límite) en temporada media", () => {
+        reserva.getFechaInicio.mockReturnValue(new Date("2025-09-13"))
+        reserva.getKmRecorridos.mockReturnValue(200);
+        expect(vehiculo.calcularTarifa(reserva)).toBe(50 * 7 + 200 * 0.2);
     });
 
-    it("Debe calcular correctamente si no recorrió km", () => {
-        reserva.setKmRecorridos(0);
+    it("Debe calcular correctamente si no recorrió km en temporada media", () => {
+        reserva.getFechaInicio.mockReturnValue(new Date("2025-09-13"))
+        reserva.getKmRecorridos.mockReturnValue(0);
         expect(vehiculo.calcularTarifa(reserva)).toBe(50 * 7);
     });
+
+    it("Debe aplicar un recargo del 20% en temporada alta", () => {
+        reserva.getFechaInicio.mockReturnValue(new Date("2025-01-15"))
+        reserva.getKmRecorridos.mockReturnValue(400)
+        expect(vehiculo.calcularTarifa(reserva)).toBe(50 * 7 + 400 * 0.2 + 50 * 7 * 0.20)
+    })
+
+    it("Debe aplicar un descuento del 10% en temporada baja", () => {
+        reserva.getFechaInicio.mockReturnValue(new Date("2025-07-10"))
+        reserva.getKmRecorridos.mockReturnValue(500)
+        expect(vehiculo.calcularTarifa(reserva)).toBe(50 * 7 + 500 * 0.2 - 50 * 7 * 0.10)
+    })
+
+    it("Debe aplicar descuento y cargo por km correctamente en temporada baja", () => {
+        reserva.getFechaInicio.mockReturnValue(new Date("2025-06-15"))
+        reserva.getKmRecorridos.mockReturnValue(900)
+        expect(vehiculo.calcularTarifa(reserva)).toBe(50 * 7 + 900 * 0.2 - 50 * 7 * 0.10)
+    })    
 });

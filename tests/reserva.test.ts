@@ -1,21 +1,24 @@
 import Reserva from "../src/reserva";
 import Cliente from "../src/cliente";
 import Compacto from "../src/compacto";
-import Vehiculo from "../src/vehiculo";
+import Sedan from "../src/sedan";
+import SUV from "../src/suv";
+import { DeepMockProxy, mock, mockDeep } from "jest-mock-extended";
 
 describe("Reserva getters y setters", () => {
   let fechaInicio: Date;
   let fechaFin: Date;
-  let cliente: Cliente;
-  let vehiculo: Vehiculo;
+  let cliente: DeepMockProxy<Cliente>;
+  let vehiculo: DeepMockProxy<Compacto>;
   let reserva: Reserva;
 
   beforeEach(() => {
+    
     fechaInicio = new Date("2025-09-01");
     fechaFin = new Date("2025-09-05");
 
-    cliente = new Cliente(123, "Cliente ", 12345678);
-    vehiculo = new Compacto("Auto Test", 456);
+    cliente = mockDeep<Cliente>();
+    vehiculo = mockDeep<Compacto>();
 
     reserva = new Reserva(cliente, vehiculo, fechaInicio, fechaFin);
   });

@@ -1,30 +1,41 @@
 import Cliente from "./cliente";
+import { EstadoVehiculo } from "./estado-vehiculo";
+import Mantenimiento from "./mantenimiento";
 import Reserva from "./reserva";
-import Vehiculo from "./vehiculo";
+import Vehiculo from "./vehiculo"
+import VerificadorVehiculo from "./verificadorVehiculo";
 
 export default class DriveHub{
-    protected vehiculo: Array<Vehiculo>
-    protected cliente: Array<Cliente>
-    protected reservas: Array<Reserva>
+    private vehiculos: Array<Vehiculo>
+    private clientes: Array<Cliente>
+    private reservas: Array<Reserva>
+    private verificadorVehiculos : VerificadorVehiculo;
 
     constructor(){
-        this.vehiculo = []
-        this.cliente = []
+        this.vehiculos = []
+        this.clientes = []
         this.reservas = []
+        this.verificadorVehiculos = new VerificadorVehiculo()
     }
 
     public ingresarVehiculo(vehiculo: Vehiculo): void {
-        this.vehiculo.push(vehiculo);
+        this.vehiculos.push(vehiculo);
     }
 
-    public ingresarCliente(cliente: Cliente): void {
-        this.cliente.push(cliente);
-    }
-
-    public ingresarReserva(cliente: Cliente){
-        for (const reserva of cliente.getReserva()) {
-            this.reservas.push(reserva);
+    public ingresarReserva(cliente: Cliente, vehiculo: Vehiculo, fechaInicio: Date, fechaFin: Date): void{
+        this.verificadorVehiculos.puedeReservarse(vehiculo);
+        const reserva = new Reserva(cliente, vehiculo, fechaInicio, fechaFin)
+        this.reservas.push(reserva);
+        if (!this.clientes.includes(cliente)) {
+            this.clientes.push(cliente);
         }
+    }
+
+    public agregarMantenimientoAVehiculo(vehiculo : Vehiculo, mantenimiento: Mantenimiento): void {
+        vehiculo.setMantenimiento(mantenimiento);
+        vehiculo.setEstado(EstadoVehiculo["EN MANTENIMIENTO"])
+        vehiculo.setKilometrajeUltMantenimiento(vehiculo.getKilometraje());
+        vehiculo.setFechaUltMantenimiento(mantenimiento.getFecha());
     }
 
 

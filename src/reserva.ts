@@ -1,19 +1,21 @@
 import Cliente from "./cliente";
+import { EstadoVehiculo } from "./estado-vehiculo";
 import Vehiculo from "./vehiculo";
 
 export default class Reserva {
-    protected cliente: Cliente;
-    protected fechaInicio: Date;
-    protected fechaFin: Date;
-    protected vehiculo: Vehiculo;
-    protected kmRecorridos: number = 0;
+    private cliente: Cliente;
+    private fechaInicio: Date;
+    private fechaFin: Date;
+    private vehiculo: Vehiculo;
+    private kmRecorridos: number = 0;
 
     constructor(cliente: Cliente, vehiculo: Vehiculo, fechaInicio: Date, fechaFin: Date) {
         this.cliente = cliente;
         this.vehiculo = vehiculo;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
-        this.vehiculo.setEstado("En Alquiler");
+        this.vehiculo.setEstado(EstadoVehiculo["EN ALQUILER"]);
+        this.vehiculo.setAlquileresDesdeUltMantenimiento(1);
     }
 
     public getDiasReservados(): number {
@@ -23,6 +25,7 @@ export default class Reserva {
 
     public setKmRecorridos(km: number) {
         this.kmRecorridos = km;
+        this.vehiculo.setKilometraje(km);
     }
 
     public getKmRecorridos(): number {

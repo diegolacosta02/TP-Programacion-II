@@ -1,13 +1,34 @@
 @startuml Trabajo Practico Alquiler de Autos
 
+enum EstadoVehiculo {
+    DISPONIBLE
+    EN_ALQUILER
+    EN_MANTENIMIENTO
+    NECESITA_LIMPIEZA
+}
+enum Temporada {
+   BAJA
+   ALTA 
+   MEDIA 
+}
+class gestorTemporadas {
+    + getPorcentajeTemporada(reserva:Reserva):number
+    + getTemporada(reserva:Reserva)
+}
+
+class verificadorVehiculo {
+    + puedeReservarse(vehiculo:Vehiculo):boolean
+
+}
+
 class DriveHub {
     - vehiculo: Vehiculo[]
     - cliente: Cliente[]
     - reservas: Reserva[]
 
     + ingresarVehiculo(v: Vehiculo): void
-    + ingresarCliente(c: Cliente): void
-    + ingresarReserva(c: Cliente): void
+    + ingresarReserva(c: Cliente, v: Vehiculo): void
+    + agregarMantenimientoAVehiculo () : void
 }
 
 abstract class Vehiculo {
@@ -17,7 +38,7 @@ abstract class Vehiculo {
     # kilometraje: number
     # historialMantenimiento: Mantenimiento[]
 
-    + calcularTarifa(reserva: Reserva): number
+    + abstract calcularTarifa(reserva: Reserva): number
     + agregarMantenimiento(m: Mantenimiento): void
     + getHistorialMantenimiento(): Mantenimiento[]
     + getCostoTotalMantenimientos(): number
@@ -26,29 +47,33 @@ abstract class Vehiculo {
 }
 
 
-class Compacto extends Vehiculo {
-    - static tarifaBase: number
+class Compacto  {
+    - tarifaBase: number
+    - cargoAdicional: number
+    - kmPermitidos:number
     + calcularTarifa(reserva: Reserva): number
 }
 
-class Sedan extends Vehiculo {
-    - static tarifaBase: number
+class Sedan  {
+    - tarifaBase: number
+    - cargoAdicional: number
     + calcularTarifa(reserva: Reserva): number
 }
 
-class SUV extends Vehiculo {
-    - static tarifaBase: number
+class SUV  {
+    - tarifaBase: number
+    - cargoAdicional: number
+    - cargoFijoSeguro: number
+    - kmPermitidos:number
     + calcularTarifa(reserva: Reserva): number
 }
 
 class Cliente {
-    # dni: number
-    # nombre: string
-    # telefono: number
-    # reservas: Reserva[]
+    - dni: number
+    - nombre: string
+    - telefono: number
+    - reservas: Reserva[]
 
-    + crearReserva(vehiculo: Vehiculo, fechaInicio: Date, fechaFin: Date): Reserva
-    + getReserva(): Reserva[]
 }
 
 class Reserva {
@@ -76,5 +101,19 @@ class Mantenimiento {
     + getCosto(): number
     + getDescripcion(): string
 }
+Vehiculo <|-- Compacto
+Vehiculo <|-- Sedan
+Vehiculo <|-- SUV
+
+DriveHub  --  Vehiculo
+DriveHub--  Cliente
+DriveHub  *--  Reserva
+Vehiculo  o-u-  Mantenimiento
+
+Reserva  -->  Cliente
+Reserva  -l->  Vehiculo
+Cliente  -r->  Reserva
+
+
 
 @enduml
