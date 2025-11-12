@@ -43,4 +43,8 @@ export default class DriveHub{
         return this.reservas;
     }
 
+    public getVehiculos() : Vehiculo[] {
+        return this.vehiculos;
+    }
+
 }
