@@ -1,5 +1,6 @@
 import Cliente from "./cliente";
 import { EstadoVehiculo } from "./estado-vehiculo";
+import { IVerificadorVehiculo } from "./IVerificadorVehiculo";
 import Mantenimiento from "./mantenimiento";
 import Reserva from "./reserva";
 import Vehiculo from "./vehiculo"
@@ -9,13 +10,13 @@ export default class DriveHub{
     private vehiculos: Array<Vehiculo>
     private clientes: Array<Cliente>
     private reservas: Array<Reserva>
-    private verificadorVehiculos : VerificadorVehiculo;
+    private verificadorVehiculos : IVerificadorVehiculo;
 
-    constructor(){
+    constructor(verificadorVehiculos: IVerificadorVehiculo){
         this.vehiculos = []
         this.clientes = []
         this.reservas = []
-        this.verificadorVehiculos = new VerificadorVehiculo()
+        this.verificadorVehiculos = verificadorVehiculos
     }
 
     public ingresarVehiculo(vehiculo: Vehiculo): void {
@@ -38,5 +39,8 @@ export default class DriveHub{
         vehiculo.setFechaUltMantenimiento(mantenimiento.getFecha());
     }
 
+    public getReservas() : Reserva[] {
+        return this.reservas;
+    }
 
 }

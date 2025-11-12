@@ -2,15 +2,18 @@ import { DeepMockProxy, mockDeep } from "jest-mock-extended";
 import Compacto from "../src/compacto";
 import SUV from "../src/suv";
 import Mantenimiento from "../src/mantenimiento";
+import { IGestorTemporadas } from "../src/IGestorTemporadas";
 
 describe("Test de los métodos de la clase Vehículo", () => {
     let compacto: Compacto;
     let suv: SUV;
     let mantenimiento: DeepMockProxy<Mantenimiento>;
+    let gestor: DeepMockProxy<IGestorTemporadas>;    
 
     beforeEach(() => {
-        compacto = new Compacto(1234);
-        suv = new SUV(5678);
+        gestor = mockDeep<IGestorTemporadas>();
+        compacto = new Compacto(1234, gestor);
+        suv = new SUV(5678, gestor);
         mantenimiento = mockDeep<Mantenimiento>();
         mantenimiento.getCosto.mockReturnValue(100);
     });

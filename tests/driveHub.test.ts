@@ -4,6 +4,7 @@ import Cliente from "../src/cliente";
 import Vehiculo from "../src/vehiculo";
 import Mantenimiento from "../src/mantenimiento";
 import { EstadoVehiculo } from "../src/estado-vehiculo";
+import { IVerificadorVehiculo } from "../src/IVerificadorVehiculo";
 
 describe("Test de clase DriveHub", () => {
     let driveHub: DriveHub;
@@ -12,9 +13,11 @@ describe("Test de clase DriveHub", () => {
     let mantenimiento: DeepMockProxy<Mantenimiento>;
     let fechaInicio: Date;
     let fechaFin: Date;
+    let verificadorMock: DeepMockProxy<IVerificadorVehiculo>;
     
     beforeEach(() => {
-        driveHub = new DriveHub();
+        verificadorMock = mockDeep<IVerificadorVehiculo>();
+        driveHub = new DriveHub(verificadorMock);
         cliente = mockDeep<Cliente>();
         vehiculo = mockDeep<Vehiculo>();
         mantenimiento = mockDeep<Mantenimiento>();

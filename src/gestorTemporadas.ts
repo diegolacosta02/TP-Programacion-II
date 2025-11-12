@@ -1,7 +1,7 @@
+import { IGestorTemporadas } from "./IGestorTemporadas";
 import Reserva from "./reserva";
-import { Temporada } from "./temporadas";
 
-export default class GestorTemporadas {
+export default class GestorTemporadas implements IGestorTemporadas {
 
 
     public getPorcentajeTemporada(reserva: Reserva): number {
@@ -13,16 +13,5 @@ export default class GestorTemporadas {
         }
         return 0
     }
-
-    public getTemporada(reserva: Reserva) : Temporada {
-        const mes = reserva.getFechaInicio().getMonth() + 1;
-        if (mes === 12 || mes === 1 || mes === 2) {
-            return Temporada.ALTA
-        } else if (mes >= 6 && mes <= 8) {
-            return Temporada.BAJA
-        }
-        return Temporada.MEDIA
-    }
-    
 
 }

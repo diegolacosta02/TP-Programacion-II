@@ -1,7 +1,8 @@
 import { EstadoVehiculo } from "./estado-vehiculo";
+import { IVerificadorVehiculo } from "./IVerificadorVehiculo";
 import Vehiculo from "./vehiculo";
 
-export default class VerificadorVehiculo {
+export default class VerificadorVehiculo implements IVerificadorVehiculo {
 
     public puedeReservarse(vehiculo: Vehiculo): boolean {
         const fechaLimite = new Date(vehiculo.getFechaUltMantenimiento());
