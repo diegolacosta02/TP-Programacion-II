@@ -6,65 +6,90 @@ enum EstadoVehiculo {
     EN_MANTENIMIENTO
     NECESITA_LIMPIEZA
 }
-enum Temporada {
-   BAJA
-   ALTA 
-   MEDIA 
+
+interface IGestorTemporadas {
+    + getPorcentajeTemporada(reserva: Reserva): number
 }
-class gestorTemporadas {
+
+interface IVerificadorVehiculo {
+    + puedeReservarse(vehiculo: Vehiculo): void
+}
+
+class GestorTemporadas {
     + getPorcentajeTemporada(reserva:Reserva):number
     + getTemporada(reserva:Reserva)
 }
 
-class verificadorVehiculo {
+class VerificadorVehiculo {
     + puedeReservarse(vehiculo:Vehiculo):boolean
-
 }
 
 class DriveHub {
-    - vehiculo: Vehiculo[]
-    - cliente: Cliente[]
+    - vehiculos: Vehiculo[]
+    - clientes: Cliente[]
     - reservas: Reserva[]
+    - verificadorVehiculos: IVerificadorVehiculo
 
-    + ingresarVehiculo(v: Vehiculo): void
-    + ingresarReserva(c: Cliente, v: Vehiculo): void
-    + agregarMantenimientoAVehiculo () : void
+    + ingresarVehiculo(vehiculo: Vehiculo): void
+    + ingresarReserva(cliente: Cliente, vehiculo: Vehiculo, fechaInicio: Date, fechaFin: Date): void
+    + agregarMantenimientoAVehiculo(vehiculo: Vehiculo, mantenimiento: Mantenimiento): void
+    + getReservas(): Reserva[]
+    + getVehiculos(): Vehiculo[]
+}
+
+class CalculadoraEstadisticas {
+    - sistema: DriveHub
+
+    + getVehiculosMasYMenosAlquilados(fechaInicio: Date, fechaFin: Date): {mas: Vehiculo | null, menos: Vehiculo | null}
+    + getRentabilidadVehiculos(): {masRentable: Vehiculo | null, menosRentable: Vehiculo | null}
+    + getOcupacionFlota(): number
 }
 
 abstract class Vehiculo {
-    # nombre: string
     # matricula: number
-    # estado: string
+    # estado: EstadoVehiculo
     # kilometraje: number
+    # kilometrajeUltMantenimiento: number
+    # alquileresDesdeUltMantenimiento: number
+    # fechaUltMantenimiento: Date
     # historialMantenimiento: Mantenimiento[]
+    # gestorTemporadas: IGestorTemporadas
 
-    + abstract calcularTarifa(reserva: Reserva): number
-    + agregarMantenimiento(m: Mantenimiento): void
+    + calcularTarifa(reserva: Reserva): number
+    + setMantenimiento(m: Mantenimiento): void
     + getHistorialMantenimiento(): Mantenimiento[]
     + getCostoTotalMantenimientos(): number
-    + setEstado(estado: string): void
-    + getEstado(): string
+    + setEstado(estado: EstadoVehiculo): void
+    + getEstado(): EstadoVehiculo
+    + setKilometraje(km: number): void
+    + getKilometraje(): number
+    + setKilometrajeUltMantenimiento(km: number): void
+    + getKilometrajeUltMantenimiento(): number
+    + setAlquileresDesdeUltMantenimiento(a: number): void
+    + getAlquileresDesdeUltMantenimiento(): number
+    + setFechaUltMantenimiento(d: Date): void
+    + getFechaUltMantenimiento(): Date
+    + getMatricula(): number
 }
 
-
-class Compacto  {
+class Compacto extends Vehiculo {
     - tarifaBase: number
     - cargoAdicional: number
-    - kmPermitidos:number
+    - kmPermitidos: number
     + calcularTarifa(reserva: Reserva): number
 }
 
-class Sedan  {
+class Sedan extends Vehiculo {
     - tarifaBase: number
     - cargoAdicional: number
     + calcularTarifa(reserva: Reserva): number
 }
 
-class SUV  {
+class SUV extends Vehiculo {
     - tarifaBase: number
     - cargoAdicional: number
     - cargoFijoSeguro: number
-    - kmPermitidos:number
+    - kmPermitidos: number
     + calcularTarifa(reserva: Reserva): number
 }
 
@@ -72,8 +97,6 @@ class Cliente {
     - dni: number
     - nombre: string
     - telefono: number
-    - reservas: Reserva[]
-
 }
 
 class Reserva {
@@ -101,19 +124,20 @@ class Mantenimiento {
     + getCosto(): number
     + getDescripcion(): string
 }
-Vehiculo <|-- Compacto
-Vehiculo <|-- Sedan
-Vehiculo <|-- SUV
 
-DriveHub  --  Vehiculo
-DriveHub--  Cliente
-DriveHub  *--  Reserva
-Vehiculo  o-u-  Mantenimiento
+IGestorTemporadas <|.. GestorTemporadas
+IVerificadorVehiculo <|.. VerificadorVehiculo
 
-Reserva  -->  Cliente
-Reserva  -l->  Vehiculo
-Cliente  -r->  Reserva
+DriveHub --> IVerificadorVehiculo
+DriveHub *-- Reserva
+DriveHub o-- Vehiculo
+DriveHub o-- Cliente
 
+Reserva --> Vehiculo
+Reserva --> Cliente
+Vehiculo o-- Mantenimiento
+Vehiculo --> IGestorTemporadas
 
+CalculadoraEstadisticas --> DriveHub
 
 @enduml
