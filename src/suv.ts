@@ -1,5 +1,6 @@
 import Vehiculo from "./vehiculo";
 import Reserva from "./reserva";
+import { IGestorTemporadas } from "./IGestorTemporadas";
 
 export default class SUV extends Vehiculo {
 
@@ -8,8 +9,8 @@ export default class SUV extends Vehiculo {
     private cargoFijoSeguro: number
     private kmPermitidos:number
 
-    constructor(matricula:number){
-        super(matricula)
+    constructor(matricula:number, gestor: IGestorTemporadas){
+        super(matricula, gestor)
         this.tarifaBase = 80
         this.cargoFijoSeguro = 15
         this.cargoAdicional = 0.25
