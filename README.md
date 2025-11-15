@@ -23,6 +23,7 @@ El proyecto está desarrollado en *TypeScript* y se estructura mediante las sigu
 - **Mantenimiento.** Registra la fecha, costo y descripción de un mantenimiento realizado a un vehículo.
 - **GestorTemporadas.** Determina la temporada según la fecha de inicio de la reserva y aplica el porcentaje correspondiente sobre la tarifa base.
 - **VerificadorVehiculo.** Controla las reglas de negocio que determinan si un vehículo puede ser reservado o debe pasar a mantenimiento.
+- **CalculadoraEstadisticas.** Genera estadísticas del sistema, como el vehículo más y menos alquilado, la rentabilidad por vehículo y el porcentaje de ocupación de la flota.
 - **DriveHub.** Clase principal que coordina la gestión general del sistema: clientes, vehículos, reservas y mantenimientos.
 
 ---
