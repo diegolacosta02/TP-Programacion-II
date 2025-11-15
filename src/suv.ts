@@ -1,7 +1,10 @@
 import Vehiculo from "./vehiculo";
 import Reserva from "./reserva";
 import { IGestorTemporadas } from "./IGestorTemporadas";
-
+/**
+ * Representa un vehículo tipo SUV.
+ * Incluye cargo fijo de seguro y una cantidad de km permitidos diarios.
+ */
 export default class SUV extends Vehiculo {
 
     private tarifaBase: number
@@ -17,6 +20,13 @@ export default class SUV extends Vehiculo {
         this.kmPermitidos = 500
     }
 
+    /**
+     * Calcula la tarifa total de la reserva.
+     * Incluye tarifa base, cargo seguro, recargos por km extra y temporada.
+     * 
+     * @param {Reserva} reserva - Reserva que se va a calcular.
+     * @returns {number} Tarifa final.
+     */    
     public calcularTarifa(reserva:Reserva): number {
         const tarifaBase = this.tarifaBase * reserva.getDiasReservados()
         const cargoSeguro = this.cargoFijoSeguro * reserva.getDiasReservados()

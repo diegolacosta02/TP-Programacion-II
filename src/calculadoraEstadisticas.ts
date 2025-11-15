@@ -1,7 +1,10 @@
 import DriveHub from "./driveHub";
-import { EstadoVehiculo } from "./estado-vehiculo";
 import Vehiculo from "./vehiculo";
 
+/**
+* Representa a una calculadora de estadísticas que
+* permite informar los datos de un sistema
+*/
 export default class CalculadoraEstadisticas {
     private sistema: DriveHub;
 
@@ -115,7 +118,7 @@ export default class CalculadoraEstadisticas {
         const vehiculos = this.sistema.getVehiculos();
         if (vehiculos.length === 0) return 0;
 
-        const enAlquiler = vehiculos.filter(v => v.getEstado() === EstadoVehiculo["EN ALQUILER"]).length;
+        const enAlquiler = vehiculos.filter(v => v.getEstado().getNombre() === ("EN ALQUILER")).length;
         return (enAlquiler / vehiculos.length) * 100;
     }
 }
