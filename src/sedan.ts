@@ -1,13 +1,14 @@
 import Vehiculo from "./vehiculo";
 import Reserva from "./reserva";
+import { IGestorTemporadas } from "./IGestorTemporadas";
 
 export default class Sedan extends Vehiculo {
 
     private tarifaBase: number
     private cargoAdicional: number
 
-    constructor(matricula:number){
-        super(matricula)
+    constructor(matricula:number, gestor: IGestorTemporadas){
+        super(matricula, gestor)
         this.tarifaBase = 50
         this.cargoAdicional = 0.2
     }

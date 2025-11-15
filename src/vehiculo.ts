@@ -1,5 +1,5 @@
 import { EstadoVehiculo } from "./estado-vehiculo";
-import GestorTemporadas from "./gestorTemporadas";
+import { IGestorTemporadas } from "./IGestorTemporadas";
 import Mantenimiento from "./mantenimiento";
 import Reserva from "./reserva";
 
@@ -11,9 +11,9 @@ export default abstract class Vehiculo {
     protected alquieleresDesdeUltMantenimiento : number;
     protected fechaUltMantenimiento : Date;
     protected historialMantenimiento: Mantenimiento[];
-    protected gestorTemporadas: GestorTemporadas;
+    protected gestorTemporadas: IGestorTemporadas;
 
-    constructor(matricula: number) {
+    constructor(matricula: number, gestor: IGestorTemporadas) {
         this.matricula = matricula;
         this.estado = EstadoVehiculo.DISPONIBLE;
         this.kilometraje = 0;
@@ -21,7 +21,7 @@ export default abstract class Vehiculo {
         this.alquieleresDesdeUltMantenimiento = 0;
         this.fechaUltMantenimiento = new Date(0);
         this.historialMantenimiento = [];
-        this.gestorTemporadas = new GestorTemporadas();
+        this.gestorTemporadas = gestor;
     }
 
     /**
@@ -82,5 +82,9 @@ export default abstract class Vehiculo {
 
     public getFechaUltMantenimiento() : Date {
         return this.fechaUltMantenimiento;
+    }
+
+    public getMatricula(): number {
+        return this.matricula;
     }
 }
