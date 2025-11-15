@@ -5,6 +5,7 @@
  * @implements {IEstadoVehiculo}
 */
 import { IEstadoVehiculo } from "./IEstadoVehiculo";
+import Vehiculo from "./vehiculo";
 
 export default class EnAlquiler implements IEstadoVehiculo {
     private nombre: string;
@@ -19,7 +20,7 @@ export default class EnAlquiler implements IEstadoVehiculo {
      * @throws {Error} Siempre, indicando que el vehículo está en alquiler.
      * @returns {boolean} Nunca retorna; siempre lanza error.
      */    
-    public puedeReservarse(): boolean {
+    public puedeReservarse(vehiculo: Vehiculo): boolean {
         throw new Error("El vehículo no está disponible. Se encuentra en alquiler.")
     }  
     
