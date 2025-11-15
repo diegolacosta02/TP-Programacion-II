@@ -5,7 +5,7 @@ import { IEstadoVehiculo } from "./IEstadoVehiculo";
  * 
  * @implements {IEstadoVehiculo}
  */
-export class EnMantenimiento implements IEstadoVehiculo {
+export default class EnMantenimiento implements IEstadoVehiculo {
     private nombre: string;
 
     constructor() {

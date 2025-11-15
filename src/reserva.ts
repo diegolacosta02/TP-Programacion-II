@@ -1,5 +1,5 @@
 import Cliente from "./cliente";
-import { EnAlquiler } from "./enAlquiler";
+import EnAlquiler from "./enAlquiler";
 import Vehiculo from "./vehiculo";
 /**
  * Representa una reserva realizada por un cliente para un vehículo.

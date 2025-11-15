@@ -4,7 +4,7 @@ import Cliente from "../src/cliente";
 import Vehiculo from "../src/vehiculo";
 import Mantenimiento from "../src/mantenimiento";
 import { IVehiculoFactory } from "../src/IVehiculoFactory";
-import { Disponible } from "../src/disponible";
+import Disponible from "../src/disponible";
 
 describe("Test de clase DriveHub", () => {
     let driveHub: DriveHub;

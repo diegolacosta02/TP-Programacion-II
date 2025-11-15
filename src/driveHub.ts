@@ -1,5 +1,5 @@
 import Cliente from "./cliente";
-import { EnMantenimiento } from "./enMantenimiento";
+import EnMantenimiento from "./enMantenimiento";
 import { IVehiculoFactory } from "./IVehiculoFactory";
 import Mantenimiento from "./mantenimiento";
 import Reserva from "./reserva";

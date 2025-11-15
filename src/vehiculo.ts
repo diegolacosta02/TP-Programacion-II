@@ -1,4 +1,4 @@
-import { Disponible } from "./disponible";
+import Disponible from "./disponible";
 import { IEstadoVehiculo } from "./IEstadoVehiculo";
 import { IGestorTemporadas } from "./IGestorTemporadas";
 import Mantenimiento from "./mantenimiento";

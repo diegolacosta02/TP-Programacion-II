@@ -23,7 +23,6 @@ El proyecto está desarrollado en *TypeScript* y se estructura mediante las sigu
 - **VehiculoFactory.** Implementación del Factory Method que crea instancias de Compacto, Sedan y SUV.
 - **Disponible, EnAlquiler, EnMantenimiento.** Implementaciones del patrón State que gobiernan el comportamiento de reserva según el estado actual del vehículo.
 - **CalculadoraEstadisticas.** Genera estadísticas del sistema, como el vehículo más y menos alquilado, la rentabilidad por vehículo y el porcentaje de ocupación de la flota.
-- **CalculadoraEstadisticas.** Genera estadísticas del sistema, como el vehículo más y menos alquilado, la rentabilidad por vehículo y el porcentaje de ocupación de la flota.
 - **DriveHub.** Clase principal que coordina la gestión general del sistema: clientes, vehículos, reservas y mantenimientos.
 
 ---
@@ -45,6 +44,7 @@ Encapsula la lógica para calcular el porcentaje de ajuste por temporada en una 
 DriveHub funciona como punto de acceso único al sistema, ofreciendo una interfaz simplificada para operaciones complejas:ingresarVehiculo(), ingresarReserva(), agregarMantenimientoAVehiculo().
 Oculta la complejidad interna y coordina múltiples clases. Si bien no implementa el patrón Facade en su versión más formal, sí cumple la función de actuar como una puerta de entrada coherente hacia un conjunto de componentes más detallados.
 
+---
 
 ### 📖 Documentación
 El proyecto cuenta con documentación generada con JSDoc, que describe detalladamente las clases, métodos y atributos del sistema. Esta documentación facilita la comprensión de la estructura del código y cómo interactúan los distintos componentes. Permite entender los métodos, su funcionalidad, sus parámetros  y retornos.
