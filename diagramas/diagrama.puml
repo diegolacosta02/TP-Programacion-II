@@ -1,18 +1,35 @@
 @startuml Trabajo Practico Alquiler de Autos
+interface IEstadoVehiculo {
+    + puedeReservarse(): boolean
+    + getNombre(): string
+}
 
-enum EstadoVehiculo {
-    DISPONIBLE
-    EN_ALQUILER
-    EN_MANTENIMIENTO
-    NECESITA_LIMPIEZA
+class Disponible implements IEstadoVehiculo {
+    + puedeReservarse(): boolean
+    + getNombre(): string
+}
+
+class EnAlquiler implements IEstadoVehiculo {
+    + puedeReservarse(): boolean
+    + getNombre(): string
+}
+
+class EnMantenimiento implements IEstadoVehiculo {
+    + puedeReservarse(): boolean
+    + getNombre(): string
+}
+
+interface IVehiculoFactory {
+    + crearVehiculo(tipo: string, matricula: number): Vehiculo
+}
+
+class VehiculoFactory implements IVehiculoFactory {
+    - gestor: IGestorTemporadas
+    + crearVehiculo(tipo: string, matricula: number): Vehiculo
 }
 
 interface IGestorTemporadas {
     + getPorcentajeTemporada(reserva: Reserva): number
-}
-
-interface IVerificadorVehiculo {
-    + puedeReservarse(vehiculo: Vehiculo): void
 }
 
 class GestorTemporadas {
@@ -20,21 +37,15 @@ class GestorTemporadas {
     + getTemporada(reserva:Reserva)
 }
 
-class VerificadorVehiculo {
-    + puedeReservarse(vehiculo:Vehiculo):boolean
-}
-
 class DriveHub {
     - vehiculos: Vehiculo[]
     - clientes: Cliente[]
     - reservas: Reserva[]
-    - verificadorVehiculos: IVerificadorVehiculo
 
     + ingresarVehiculo(vehiculo: Vehiculo): void
     + ingresarReserva(cliente: Cliente, vehiculo: Vehiculo, fechaInicio: Date, fechaFin: Date): void
     + agregarMantenimientoAVehiculo(vehiculo: Vehiculo, mantenimiento: Mantenimiento): void
-    + getReservas(): Reserva[]
-    + getVehiculos(): Vehiculo[]
+    + getters() y setters()
 }
 
 class CalculadoraEstadisticas {
@@ -56,20 +67,8 @@ abstract class Vehiculo {
     # gestorTemporadas: IGestorTemporadas
 
     + calcularTarifa(reserva: Reserva): number
-    + setMantenimiento(m: Mantenimiento): void
-    + getHistorialMantenimiento(): Mantenimiento[]
     + getCostoTotalMantenimientos(): number
-    + setEstado(estado: EstadoVehiculo): void
-    + getEstado(): EstadoVehiculo
-    + setKilometraje(km: number): void
-    + getKilometraje(): number
-    + setKilometrajeUltMantenimiento(km: number): void
-    + getKilometrajeUltMantenimiento(): number
-    + setAlquileresDesdeUltMantenimiento(a: number): void
-    + getAlquileresDesdeUltMantenimiento(): number
-    + setFechaUltMantenimiento(d: Date): void
-    + getFechaUltMantenimiento(): Date
-    + getMatricula(): number
+    + getters() y setters()
 }
 
 class Compacto extends Vehiculo {
@@ -106,13 +105,7 @@ class Reserva {
     - fechaFin: Date
     - kmRecorridos: number
 
-    + getDiasReservados(): number
-    + setKmRecorridos(km: number): void
-    + getKmRecorridos(): number
-    + getVehiculo(): Vehiculo
-    + getCliente(): Cliente
-    + getFechaInicio(): Date
-    + getFechaFin(): Date
+    + getters() y setters()
 }
 
 class Mantenimiento {
@@ -120,15 +113,12 @@ class Mantenimiento {
     - costo: number
     - descripcion: string
 
-    + getFecha(): Date
-    + getCosto(): number
-    + getDescripcion(): string
+    + getters() y setters()
 }
 
 IGestorTemporadas <|.. GestorTemporadas
-IVerificadorVehiculo <|.. VerificadorVehiculo
 
-DriveHub --> IVerificadorVehiculo
+DriveHub --> IVehiculoFactory
 DriveHub *-- Reserva
 DriveHub o-- Vehiculo
 DriveHub o-- Cliente
@@ -137,6 +127,7 @@ Reserva --> Vehiculo
 Reserva --> Cliente
 Vehiculo o-- Mantenimiento
 Vehiculo --> IGestorTemporadas
+Vehiculo --> IEstadoVehiculo
 
 CalculadoraEstadisticas --> DriveHub
 
