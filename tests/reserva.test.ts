@@ -1,8 +1,6 @@
 import Reserva from "../src/reserva";
 import Cliente from "../src/cliente";
 import Compacto from "../src/compacto";
-import Sedan from "../src/sedan";
-import SUV from "../src/suv";
 import { DeepMockProxy, mock, mockDeep } from "jest-mock-extended";
 
 describe("Reserva getters y setters", () => {

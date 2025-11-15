@@ -1,4 +1,6 @@
-import Reserva from "./reserva"
+/**
+ * Representa a un cliente registrado en el sistema de alquiler.
+ */
 export default class Cliente{
     private dni: number
     private nombre: string
