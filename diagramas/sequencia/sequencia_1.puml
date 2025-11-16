@@ -1,0 +1,26 @@
+@startuml Trabajo Practico Alquiler de Autos
+title Diagrama de sequencia: creación de reserva
+
+actor Cliente
+participant "DriveHub" as DH
+participant "Vehiculo" as V
+participant "Reserva" as R
+
+Cliente -> DH: solicitarReserva(vehiculo, fechaInicio, fechaFin)
+activate DH
+
+DH -> V: getEstado()
+activate V
+V -> V: puedeReservarse()
+V --> DH: true
+deactivate V
+
+DH -> R: new Reserva(cliente, vehiculo, fechaInicio, fechaFin)
+activate R
+R -> V: setEstado(EnAlquiler)
+R -> V: incrementarAlquileres()
+deactivate R
+
+DH --> Cliente: confirmación de reserva
+deactivate DH
+@enduml

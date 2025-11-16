@@ -1,4 +1,5 @@
 import { IEstadoVehiculo } from "./IEstadoVehiculo";
+import Vehiculo from "./vehiculo";
 /**
  * Representa el estado "En mantenimiento" de un vehículo.
  * Un vehículo en este estado no puede ser reservado.
@@ -17,7 +18,7 @@ export default class EnMantenimiento implements IEstadoVehiculo {
      * @throws {Error} Siempre, indicando que el vehículo está en mantenimiento.
      * @returns {boolean} Nunca retorna; siempre lanza error.
      */    
-    public puedeReservarse(): boolean {
+    public puedeReservarse(vehiculo: Vehiculo): boolean {
         throw new Error("El vehículo no está disponible. Se encuentra en mantenimiento.")
     } 
     

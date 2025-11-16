@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: driveHub.ts</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: driveHub.ts</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import Cliente from "./cliente";
+import EnMantenimiento from "./enMantenimiento";
+import { IVehiculoFactory } from "./IVehiculoFactory";
+import Mantenimiento from "./mantenimiento";
+import Reserva from "./reserva";
+import Vehiculo from "./vehiculo"
+/**
+ * Clase principal que gestiona el sistema de alquiler de vehículos.
+ * Permite registrar vehículos, clientes, reservas y mantenimientos.
+ * Actúa como punto central de coordinación entre las entidades.
+ */
+export default class DriveHub{
+    private vehiculos: Array&lt;Vehiculo>
+    private clientes: Array&lt;Cliente>
+    private reservas: Array&lt;Reserva>
+    private vehiculoFactory: IVehiculoFactory;
+
+    constructor(factory: IVehiculoFactory){
+        this.vehiculos = []
+        this.clientes = []
+        this.reservas = []
+        this.vehiculoFactory = factory
+        
+    }
+
+    /**
+     * Registra un nuevo vehículo en el sistema utilizando la fábrica de vehículos.
+     * @param {string} tipo - Tipo de vehículo a crear (ej: "compacto", "suv", "sedan").
+     * @param {number} matricula - Número identificatorio del vehículo.
+     */
+    public ingresarVehiculo(tipo: string, matricula: number): void {
+        const vehiculo = this.vehiculoFactory.crearVehiculo(tipo, matricula)
+        this.vehiculos.push(vehiculo);
+    }
+
+    /**
+     * Registra una nueva reserva si el vehículo está disponible.
+     * Actualiza el contador de alquileres desde el último mantenimiento
+     * y registra al cliente si aún no estaba registrado.
+     * @param {Cliente} cliente - Cliente que realiza la reserva.
+     * @param {Vehiculo} vehiculo - Vehículo a reservar.
+     * @param {Date} fechaInicio - Fecha de inicio de la reserva.
+     * @param {Date} fechaFin - Fecha de fin de la reserva.
+     * @throws {Error} Si el vehículo no puede reservarse según su estado.
+     */
+    public ingresarReserva(cliente: Cliente, vehiculo: Vehiculo, fechaInicio: Date, fechaFin: Date): void{
+        vehiculo.getEstado().puedeReservarse(vehiculo);
+        const reserva = new Reserva(cliente, vehiculo, fechaInicio, fechaFin)
+        this.reservas.push(reserva);
+        vehiculo.setAlquileresDesdeUltMantenimiento(1);
+        if (!this.clientes.includes(cliente)) {
+            this.clientes.push(cliente);
+        }
+    }
+
+    /**
+     * Registra un mantenimiento en el vehículo, actualizando su estado,
+     * fecha y kilometraje correspondientes.
+     * @param {Vehiculo} vehiculo - Vehículo a actualizar.
+     * @param {Mantenimiento} mantenimiento - Mantenimiento realizado.
+     */
+    public agregarMantenimientoAVehiculo(vehiculo : Vehiculo, mantenimiento: Mantenimiento): void {
+        vehiculo.setMantenimiento(mantenimiento);
+        vehiculo.setEstado(new EnMantenimiento())
+        vehiculo.setKilometrajeUltMantenimiento(vehiculo.getKilometraje());
+        vehiculo.setFechaUltMantenimiento(mantenimiento.getFecha());
+    }
+
+    /**
+     * Obtiene la lista de reservas registradas.
+     * @returns {Reserva[]} Array de reservas.
+     */
+    public getReservas() : Reserva[] {
+        return this.reservas;
+    }
+
+    /**
+     * Obtiene la lista de vehículos registrados.
+     * @returns {Vehiculo[]} Array de vehículos.
+     */
+    public getVehiculos() : Vehiculo[] {
+        return this.vehiculos;
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="module.exports.html">exports</a></li></ul><h3>Global</h3><ul><li><a href="global.html#agregarMantenimientoAVehiculo">agregarMantenimientoAVehiculo</a></li><li><a href="global.html#calcularTarifa">calcularTarifa</a></li><li><a href="global.html#crearVehiculo">crearVehiculo</a></li><li><a href="global.html#getAlquileresDesdeUltMantenimiento">getAlquileresDesdeUltMantenimiento</a></li><li><a href="global.html#getCliente">getCliente</a></li><li><a href="global.html#getCosto">getCosto</a></li><li><a href="global.html#getCostoTotalMantenimientos">getCostoTotalMantenimientos</a></li><li><a href="global.html#getDescripcion">getDescripcion</a></li><li><a href="global.html#getDiasReservados">getDiasReservados</a></li><li><a href="global.html#getEstado">getEstado</a></li><li><a href="global.html#getFecha">getFecha</a></li><li><a href="global.html#getFechaFin">getFechaFin</a></li><li><a href="global.html#getFechaInicio">getFechaInicio</a></li><li><a href="global.html#getFechaUltMantenimiento">getFechaUltMantenimiento</a></li><li><a href="global.html#getHistorialMantenimiento">getHistorialMantenimiento</a></li><li><a href="global.html#getKilometraje">getKilometraje</a></li><li><a href="global.html#getKilometrajeUltMantenimiento">getKilometrajeUltMantenimiento</a></li><li><a href="global.html#getKmRecorridos">getKmRecorridos</a></li><li><a href="global.html#getMatricula">getMatricula</a></li><li><a href="global.html#getNombre">getNombre</a></li><li><a href="global.html#getOcupacionFlota">getOcupacionFlota</a></li><li><a href="global.html#getPorcentajeTemporada">getPorcentajeTemporada</a></li><li><a href="global.html#getRentabilidadVehiculos">getRentabilidadVehiculos</a></li><li><a href="global.html#getReservas">getReservas</a></li><li><a href="global.html#getVehiculo">getVehiculo</a></li><li><a href="global.html#getVehiculos">getVehiculos</a></li><li><a href="global.html#getVehiculosMasYMenosAlquilados">getVehiculosMasYMenosAlquilados</a></li><li><a href="global.html#ingresarReserva">ingresarReserva</a></li><li><a href="global.html#ingresarVehiculo">ingresarVehiculo</a></li><li><a href="global.html#puedeReservarse">puedeReservarse</a></li><li><a href="global.html#setAlquileresDesdeUltMantenimiento">setAlquileresDesdeUltMantenimiento</a></li><li><a href="global.html#setEstado">setEstado</a></li><li><a href="global.html#setFechaUltMantenimiento">setFechaUltMantenimiento</a></li><li><a href="global.html#setKilometraje">setKilometraje</a></li><li><a href="global.html#setKilometrajeUltMantenimiento">setKilometrajeUltMantenimiento</a></li><li><a href="global.html#setKmRecorridos">setKmRecorridos</a></li><li><a href="global.html#setMantenimiento">setMantenimiento</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sat Nov 15 2025 21:02:23 GMT-0300 (hora estándar de Argentina)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
