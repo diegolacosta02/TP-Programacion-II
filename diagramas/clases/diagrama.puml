@@ -1,4 +1,5 @@
 @startuml Trabajo Practico Alquiler de Autos
+title Diagrama de clases
 interface IEstadoVehiculo {
     + puedeReservarse(): boolean
     + getNombre(): string

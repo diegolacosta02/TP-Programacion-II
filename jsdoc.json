@@ -1,0 +1,20 @@
+{
+  "source": {
+    "include": ["src"],
+    "includePattern": ".+\\.ts$",
+    "excludePattern": "(node_modules|tests)"
+  },
+  "plugins": [
+    "jsdoc-babel",
+    "jsdoc-tsimport-plugin"
+  ],
+  "babel": {
+    "extensions": ["ts"],
+    "presets": ["@babel/preset-typescript"]
+  },
+  "opts": {
+    "destination": "./documentacion",
+    "recurse": true,
+    "encoding": "utf8"
+  }
+}

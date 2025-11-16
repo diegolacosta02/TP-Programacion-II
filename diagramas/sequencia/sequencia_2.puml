@@ -1,0 +1,18 @@
+@startuml Trabajo Practico Alquiler de Autos
+title Diagrama de sequencia: creación de reserva cuando el vehículo está en Mantenimiento
+
+participant "DriveHub" as DH
+participant "Vehiculo" as V
+participant "EnMantenimiento" as M
+
+DH -> V: getEstado()
+activate V
+V -> V: puedeReservarse()
+alt supera límites de mantenimiento
+    V -> M: setEstado()
+    V --> DH: Error("No disponible, en mantenimiento")
+end
+deactivate V
+
+DH --> Cliente: notificación error
+@enduml
